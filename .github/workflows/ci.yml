@@ -12,25 +12,14 @@ permissions:
   checks: write
 
 jobs:
-  reuse-action:
-    name: Reusable Setup (Composite Action)
+  lint:
+    name: Lint & Format Check
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
       - uses: ./.github/actions/setup-project
         with:
           node-version: '18'
-
-  lint:
-    name: Lint & Format Check
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
-        with:
-          node-version: '18'
-          cache: 'npm'
-      - run: npm ci
       - run: npm run lint
       - run: npm run format:check
 
@@ -40,11 +29,9 @@ jobs:
     needs: lint
     steps:
       - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
+      - uses: ./.github/actions/setup-project
         with:
           node-version: '18'
-          cache: 'npm'
-      - run: npm ci
       - name: Run tests with coverage
         run: npm test -- --coverage
       - name: Upload coverage to Codecov
@@ -60,11 +47,9 @@ jobs:
     needs: test
     steps:
       - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
+      - uses: ./.github/actions/setup-project
         with:
           node-version: '18'
-          cache: 'npm'
-      - run: npm ci
       - run: npm run build
       - uses: actions/upload-artifact@v4
         with:
