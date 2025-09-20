@@ -70,4 +70,10 @@ npm run build
 
 MIT
 
+# CSP451 Assignment
+
+![Deployment](https://github.com/ababamahmoudi/CSP451-Checkpoint3-AliBabamahmoudi/actions/workflows/deploy.yml/badge.svg)
+
+A Node.js project for CSP451 coursework.
+
 See WORKFLOWS.md for detailed CI/CD documentation.
