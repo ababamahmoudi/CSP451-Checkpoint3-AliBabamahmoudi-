@@ -1,0 +1,31 @@
+name: Daily Dependency Check
+
+on:
+  schedule:
+    - cron: "0 2 * * *" # runs every day at 2 AM UTC
+  workflow_dispatch: # allows manual run too
+
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 18
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Run npm audit
+        run: npm audit --json > audit.json || true
+
+      - name: Create issue if vulnerabilities found
+        uses: peter-evans/create-issue-from-file@v5
+        with:
+          title: "Security vulnerabilities found"
+          content-filepath: ./audit.json
+          labels: security
