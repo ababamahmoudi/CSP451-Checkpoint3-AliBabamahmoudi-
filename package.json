@@ -34,7 +34,7 @@
   },
   "jest": {
     "testEnvironment": "node",
-    "transform": {}
+    "transform": {},
     "coverageThreshold": {
     "global": {
       "statements": 80,
