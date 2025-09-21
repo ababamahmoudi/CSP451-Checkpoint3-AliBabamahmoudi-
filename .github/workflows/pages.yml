@@ -5,13 +5,13 @@ on:
     branches: [main]
 
 permissions:
-  contents: write
+  contents: read
   pages: write
   id-token: write
 
 concurrency:
   group: pages
-  cancel-in-progress: false
+  cancel-in-progress: true
 
 jobs:
   build:
@@ -22,31 +22,17 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: 18
-          cache: false   # disable auto cache detection
-
-      - name: Cache npm
-        uses: actions/cache@v3
-        with:
-          path: ~/.npm
-          key: ${{ runner.os }}-node-${{ hashFiles('package-lock.json') }}
-          restore-keys: |
-            ${{ runner.os }}-node-
-
-      - name: Set build environment
-        run: |
-          echo "NODE_ENV=production" >> $GITHUB_ENV
-          echo "PUBLIC_URL=${{ github.server_url }}/${{ github.repository }}" >> $GITHUB_ENV
 
       - name: Install dependencies
         run: npm ci
 
-      - name: Run build
+      - name: Build project
         run: npm run build
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: dist
+          path: dist   # 👈 make sure this matches your build output folder
 
   deploy:
     runs-on: ubuntu-latest
