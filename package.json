@@ -6,7 +6,7 @@
   "scripts": {
     "start": "node src/index.js",
     "dev": "node src/index.js",
-    "build": "rimraf dist && node ./scripts/build.js",
+    "build": "npx rimraf dist && node ./scripts/build.js",
     "lint": "eslint .",
     "format": "prettier --write .",
     "format:check": "prettier --check .",
