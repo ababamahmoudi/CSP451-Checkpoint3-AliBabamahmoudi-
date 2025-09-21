@@ -13,7 +13,7 @@
     "test": "node --experimental-vm-modules ./node_modules/jest/bin/jest.js --coverage",
     "test:unit": "node --experimental-vm-modules ./node_modules/jest/bin/jest.js --coverage",
     "test:integration": "node --experimental-vm-modules ./node_modules/jest/bin/jest.js --config jest.config.cjs --runTestsByPath tests/integration/example.integration.test.js",
-    "test:smoke": "node scripts/smoke-test.js"
+    "test:smoke": "node --experimental-vm-modules scripts/smoke-test.js"
   },
   "engines": {
     "node": ">=16"
@@ -31,5 +31,9 @@
     "jest": "^29.7.0",
     "prettier": "^3.3.3",
     "rimraf": "^6.0.1"
+  },
+  "jest": {
+    "testEnvironment": "node",
+    "transform": {}
   }
 }
