@@ -35,7 +35,7 @@ jobs:
           node-version: '18'
 
       - name: Run tests with coverage
-        run: npm test -- --coverage
+        run: npm test -- --config=jest.config.cjs
 
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v4
