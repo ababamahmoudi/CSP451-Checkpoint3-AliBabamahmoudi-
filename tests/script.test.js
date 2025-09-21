@@ -1,5 +1,6 @@
 // tests/script.test.js
 import * as indexModule from '../src/index.js';
+import { jest } from '@jest/globals';
 
 describe('script.js', () => {
   it('should call runExample and log the output', async () => {
