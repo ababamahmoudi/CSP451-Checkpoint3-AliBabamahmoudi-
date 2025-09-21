@@ -26,7 +26,7 @@ jobs:
         run: |
           echo "NODE_ENV=production" >> $GITHUB_ENV
           echo "PUBLIC_URL=${{ github.server_url }}/${{ github.repository }}" >> $GITHUB_ENV
-      - name: Ensure rimraf is installed
+      - name: Install rimraf
         run: npm install rimraf --save-dev
       - run: npm install
       - run: npm run build
