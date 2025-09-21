@@ -11,12 +11,22 @@ export default [
     languageOptions: {
       globals: {
         ...globals.browser,
+        ...globals.node,   // ✅ allow process, require, module, etc.
       },
     },
     rules: {
-      // Add/override rules here if needed
       "no-unused-vars": "warn",
       "no-console": "off",
     },
   },
+
+  {
+    files: ["tests/**/*.js"],
+    languageOptions: {
+      globals: {
+        ...globals.jest,   // ✅ allow describe, test, expect, etc.
+      },
+    },
+  },
 ];
+
