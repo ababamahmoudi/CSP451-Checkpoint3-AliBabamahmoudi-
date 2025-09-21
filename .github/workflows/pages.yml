@@ -17,24 +17,34 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
+      # Checkout repo at the root of the workspace
       - uses: actions/checkout@v4
+        with:
+          path: .
 
+      # Set up Node.js environment
       - uses: actions/setup-node@v4
         with:
           node-version: 18
           cache: 'npm'
 
+      # Set environment variables for build
       - name: Set build environment
         run: |
           echo "NODE_ENV=production" >> $GITHUB_ENV
           echo "PUBLIC_URL=${{ github.server_url }}/${{ github.repository }}" >> $GITHUB_ENV
 
+      # Install all dependencies including devDependencies
       - name: Install dependencies
-        run: npm ci        # installs all dependencies including devDependencies like rimraf
+        run: npm ci
+        working-directory: ./
 
+      # Run build script
       - name: Run build
         run: npm run build
+        working-directory: ./
 
+      # Upload build artifacts for Pages
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
@@ -43,9 +53,9 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     needs: build
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
     steps:
       - id: deployment
         uses: actions/deploy-pages@v4
-
-      - name: Show deployed URL
-        run: echo "Your site is live at ${{ steps.deployment.outputs.page_url }}"
