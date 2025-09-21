@@ -3,17 +3,14 @@ module.exports = {
   testEnvironment: "node",
   transform: {},
 
-  // Collect coverage for all JS files in src/, except index.js
+  // Force coverage collection
   collectCoverage: true,
   collectCoverageFrom: ["src/**/*.js", "!src/index.js"],
 
-  // Directory where Jest outputs coverage files
+  // Ensure Jest writes JSON and LCOV files for CI
   coverageDirectory: "coverage",
+  coverageReporters: ["json-summary", "json", "lcov", "text", "clover"],
 
-  // Reporters ensure JSON + LCOV + text output
-  coverageReporters: ["json", "lcov", "text", "clover"],
-
-  // Enforce thresholds (CI will fail if below these)
   coverageThreshold: {
     global: {
       branches: 80,
