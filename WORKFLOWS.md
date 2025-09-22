@@ -6,6 +6,9 @@ This repository includes multiple GitHub Actions workflows and one reusable comp
 
 ## CI Pipeline (`.github/workflows/ci.yml`)
 
+**Pipeline flow:** 
+lint ──▶ test ──▶ build ──▶ deploy
+
 - **Purpose**: Ensures code quality and reliability through linting, testing, and builds.  
 - **Triggers**:  
   - Pushes to `main` or `develop`  
@@ -18,10 +21,13 @@ This repository includes multiple GitHub Actions workflows and one reusable comp
     *Depends on `test`.*  
 - **Secrets Required**:  
   - `CODECOV_TOKEN` (needed for private repos; optional for public depending on Codecov settings).  
-- **Troubleshooting**:  
-  - Lint fails → run `npm run lint` and `npm run format` locally.  
-  - Coverage below 80% → add more unit tests.  
-  - Build fails → verify `scripts/build.js` is valid.
+
+**Troubleshooting**  
+- Lint fails → run `npm run lint` and `npm run format` locally.  
+- Prettier check fails → run `npm run format` to auto-fix.  
+- Coverage below 80% → add more unit tests.  
+- Coverage file missing → confirm `jest.config.cjs` has `collectCoverage` enabled.  
+- Build fails → check `scripts/build.js` or missing dependencies.
 
 ---
 
@@ -35,9 +41,11 @@ This repository includes multiple GitHub Actions workflows and one reusable comp
   - `NODE_ENV=production`  
   - `PUBLIC_URL` set dynamically to repo URL  
 - **Secrets Required**: Uses built-in `GITHUB_TOKEN`.  
-- **Troubleshooting**:  
-  - 404 Page → confirm GitHub Pages is enabled in **Settings → Pages**.  
-  - Permission denied → ensure workflow permissions include `contents: write`.
+
+**Troubleshooting**  
+- 404 Page → confirm GitHub Pages is enabled in **Settings → Pages**.  
+- Permission denied (403) → ensure workflow permissions include `contents: write`.  
+- Missing `dist/` → ensure `npm run build` succeeds before deploy.  
 
 ---
 
@@ -51,9 +59,11 @@ This repository includes multiple GitHub Actions workflows and one reusable comp
   - Installs dependencies and runs `npm audit --audit-level=moderate`.  
   - Opens an issue if vulnerabilities are detected.  
 - **Secrets Required**: Uses built-in `GITHUB_TOKEN`.  
-- **Troubleshooting**:  
-  - False positives → run `npm audit fix`.  
-  - Workflow skipped → check cron syntax.
+
+**Troubleshooting**  
+- Too many false positives → run `npm audit fix`.  
+- Workflow skipped → check cron syntax (`0 0 * * *`).  
+- No issues opened → confirm `actions/github-script` has correct permissions.  
 
 ---
 
@@ -65,8 +75,10 @@ This repository includes multiple GitHub Actions workflows and one reusable comp
   - Runs `npm outdated` to check for new dependency versions.  
   - Opens a GitHub issue if outdated packages are found.  
 - **Secrets Required**: Uses built-in `GITHUB_TOKEN`.  
-- **Troubleshooting**:  
-  - If issues are opened frequently, consider upgrading dependencies with `npm update`.  
+
+**Troubleshooting**  
+- Issues not being created → ensure `permissions: contents: write` is set.  
+- Workflow not running → double-check cron syntax.  
 
 ---
 
