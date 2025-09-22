@@ -6,7 +6,8 @@ Starter repository for CheckPoints 1–3. Use this to begin your assignments.
 
 - ![CI](https://github.com/ababamahmoudi/CSP451-Checkpoint3-AliBabamahmoudi-/actions/workflows/ci.yml/badge.svg)
 - ![Deploy](https://github.com/ababamahmoudi/CSP451-Checkpoint3-AliBabamahmoudi-/actions/workflows/deploy.yml/badge.svg)
-- ![codecov](https://codecov.io/gh/ababamahmoudi/CSP451-Checkpoint3-AliBabamahmoudi-/branch/main/graph/badge.svg)
+- [![codecov](https://codecov.io/gh/ababamahmoudi/CSP451-Checkpoint3-AliBabamahmoudi-/branch/main/graph/badge.svg)](https://codecov.io/gh/ababamahmoudi/CSP451-Checkpoint3-AliBabamahmoudi-)
+
 
 
 
